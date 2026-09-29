@@ -1,0 +1,18 @@
+{
+  "name": "web-application-internal-practice",
+  "version": "1.0.0",
+  "description": "Internal Exam Practice portal for Web Application Development with MCQs, live HTML/CSS coding playground, descriptive answers, and quick revision.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "web-application",
+    "practice-exam",
+    "mcq"
+  ],
+  "author": "",
+  "license": "ISC"
+}

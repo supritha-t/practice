@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Application Development — Internal Exam Practice</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header / Top Bar -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge-row">
+          <span class="eyebrow">COURSE CODE: WAD-101 • INTERNAL EXAM PREP</span>
+          <div class="header-controls">
+            <button id="themeToggle" class="icon-btn" title="Toggle Dark/Light Mode">🌙 Theme</button>
+            <button id="resetAllData" class="icon-btn danger-ghost" title="Reset all saved progress">🗑️ Reset Data</button>
+          </div>
+        </div>
+        <h1>Web Application Development</h1>
+        <p class="hero-desc">Master HTML & CSS through 30 syllabus MCQs with explanations, 6 live visual coding challenges, 15 comprehensive descriptive answers, and full exam simulations.</p>
+        
+        <div class="overall-stats-bar">
+          <div class="stat-pill"><span class="stat-label">MCQs Completed:</span> <b id="statMcq">0/30</b></div>
+          <div class="stat-pill"><span class="stat-label">Coding Mastered:</span> <b id="statCode">0/6</b></div>
+          <div class="stat-pill"><span class="stat-label">Descriptive Attempted:</span> <b id="statDesc">0/15</b></div>
+        </div>
+      </div>
+
+      <div class="exam-card">
+        <div class="exam-card-header">EXAM PATTERN (30 MARKS)</div>
+        <div class="exam-grid">
+          <div>
+            <b>PART A: MCQ</b>
+            <span>10 Marks (10 × 1m)</span>
+            <small>Concept fundamentals</small>
+          </div>
+          <div>
+            <b>PART B: CODING</b>
+            <span>10 Marks (1 of 2)</span>
+            <small>Recreate UI from image</small>
+          </div>
+          <div>
+            <b>PART C: THEORY</b>
+            <span>10 Marks (2 of 3)</span>
+            <small>Detailed 5-mark answers</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tabs-nav" aria-label="Main Navigation">
+    <div class="tabs-container">
+      <button class="tab active" data-tab="mcq">📝 MCQ Practice (30)</button>
+      <button class="tab" data-tab="coding">💻 Coding Challenges (6)</button>
+      <button class="tab" data-tab="descriptive">✍️ Descriptive Practice (15)</button>
+      <button class="tab" data-tab="revision">⚡ Revision & Tools</button>
+      <button class="tab tab-highlight" data-tab="simulator">⏱️ Exam Simulator</button>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="app-main">
+    
+    <!-- SECTION A: MCQS -->
+    <section id="mcq" class="panel active">
+      <div class="section-head">
+        <div>
+          <span class="kicker">SECTION A • 10 MARKS SYLLABUS</span>
+          <h2>MCQ Practice</h2>
+          <p>Practice 30 exam-style multiple choice questions. Instant feedback and detailed explanations available.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-main"><span id="mcqScore">0 / 30</span></div>
+          <div class="score-sub">Score (<span id="mcqPercent">0%</span>)</div>
+        </div>
+      </div>
+
+      <div class="mcq-toolbar">
+        <div class="filter-group">
+          <span class="filter-label">Filter:</span>
+          <button class="filter-chip active" data-cat="all">All (30)</button>
+          <button class="filter-chip" data-cat="HTML">HTML (8)</button>
+          <button class="filter-chip" data-cat="CSS Selectors">Selectors & Cascading (9)</button>
+          <button class="filter-chip" data-cat="Box Model">Box Model & Sizing (8)</button>
+          <button class="filter-chip" data-cat="GenAI">GenAI in Web (5)</button>
+        </div>
+        <div class="mode-toggle-wrap">
+          <label class="switch-label">
+            <input type="checkbox" id="instantFeedbackToggle" checked />
+            <span class="toggle-slider"></span>
+            <span class="switch-text">Instant Feedback Mode</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-info">
+          <span>Completion Progress</span>
+          <span id="progressText">0 answered of 30</span>
+        </div>
+        <div class="progress-track"><div id="mcqProgress" class="progress-fill"></div></div>
+      </div>
+
+      <div id="mcqList" class="mcq-container"></div>
+
+      <div class="actions-bar">
+        <button class="btn btn-primary" id="checkMcq">✓ Check All Answers</button>
+        <button class="btn btn-secondary" id="resetMcq">↻ Reset MCQs</button>
+        <button class="btn btn-ghost" id="revealAllMcqs">💡 Reveal All Explanations</button>
+      </div>
+
+      <div id="mcqResult" class="result-banner hidden"></div>
+    </section>
+
+    <!-- SECTION B: CODING CHALLENGES -->
+    <section id="coding" class="panel">
+      <div class="section-head">
+        <div>
+          <span class="kicker">SECTION B • 10 MARKS CODING CHALLENGE</span>
+          <h2>Live Coding Playground</h2>
+          <p>Recreate the webpage design shown in the reference image using HTML & CSS. Write code, preview live, and test against exact requirements.</p>
+        </div>
+      </div>
+
+      <div class="challenge-picker" id="challengePicker"></div>
+
+      <div class="coding-layout">
+        <!-- Reference Column -->
+        <aside class="reference-panel">
+          <div class="panel-header">
+            <div class="panel-tag">
+              <span>TARGET DESIGN</span>
+              <span id="challengeLevel" class="pill pill-easy">Easy</span>
+            </div>
+            <span id="challengeBadge" class="challenge-status-pill">Needs Practice</span>
+          </div>
+
+          <div class="image-preview-container">
+            <img id="targetImage" src="assets/challenge1.svg" alt="Coding challenge reference" />
+          </div>
+
+          <div class="challenge-info">
+            <h3 id="challengeTitle">Nature Gallery</h3>
+            <p id="challengeBrief"></p>
+          </div>
+
+          <div class="requirements-box">
+            <h4>Mandatory Requirements Checklist:</h4>
+            <div id="requirements" class="requirements-list"></div>
+          </div>
+        </aside>
+
+        <!-- Editor & Preview Column -->
+        <section class="editor-panel">
+          <div class="editor-header">
+            <div class="editor-tabs">
+              <button class="editor-tab active" data-editor="html">📄 HTML</button>
+              <button class="editor-tab" data-editor="css">🎨 CSS</button>
+            </div>
+            <div class="editor-helpers">
+              <button class="helper-btn" id="loadStarterBtn" title="Reset to minimal boilerplate">Template</button>
+              <button class="helper-btn" id="loadSolutionBtn" title="Load full reference solution">View Solution</button>
+              <button class="helper-btn" id="clearCodeBtn" title="Start with blank code">Clear</button>
+            </div>
+          </div>
+
+          <div id="htmlEditorWrap" class="editor-wrap">
+            <textarea id="htmlCode" spellcheck="false" placeholder="Write your HTML code here... (Press Tab to indent)"></textarea>
+          </div>
+          <div id="cssEditorWrap" class="editor-wrap hidden">
+            <textarea id="cssCode" spellcheck="false" placeholder="Write your CSS styling here... (Press Tab to indent)"></textarea>
+          </div>
+
+          <div class="editor-actions-row">
+            <div class="action-buttons">
+              <button class="btn btn-primary" id="runCode">▶ Run Code</button>
+              <button class="btn btn-accent" id="checkCode">✓ Check Requirements</button>
+              <button class="btn btn-ghost" id="resetCode">↻ Reset</button>
+            </div>
+            <div class="preview-mode-controls">
+              <span class="preview-mode-label">Viewport:</span>
+              <button class="viewport-btn active" data-width="100%" title="Desktop full width">🖥️ Desktop</button>
+              <button class="viewport-btn" data-width="768px" title="Tablet width (768px)">📱 Tablet</button>
+              <button class="viewport-btn" data-width="375px" title="Mobile width (375px)">📲 Mobile</button>
+            </div>
+          </div>
+
+          <div class="preview-header">
+            <span>LIVE BROWSER PREVIEW</span>
+            <span class="preview-tip">Changes update live or when you click Run</span>
+          </div>
+
+          <div class="preview-frame-container">
+            <div id="previewWrapper" class="preview-wrapper" style="width: 100%;">
+              <iframe id="preview" title="Live preview" sandbox="allow-scripts"></iframe>
+            </div>
+          </div>
+
+          <div id="codeResult" class="result-banner hidden"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- SECTION C: DESCRIPTIVE PRACTICE -->
+    <section id="descriptive" class="panel">
+      <div class="section-head">
+        <div>
+          <span class="kicker">SECTION C • 10 MARKS (ANSWER 2 OF 3)</span>
+          <h2>Descriptive Practice & Model Answers</h2>
+          <p>Practice writing structured university-exam answers. Type your answer to build muscle memory, then compare against the comprehensive model answer.</p>
+        </div>
+      </div>
+
+      <div class="desc-filter-row">
+        <span class="filter-label">Filter Topics:</span>
+        <button class="desc-chip active" data-dcat="all">All (15)</button>
+        <button class="desc-chip" data-dcat="HTML">HTML Structure & Elements (5)</button>
+        <button class="desc-chip" data-dcat="CSS">CSS Rules & Cascading (5)</button>
+        <button class="desc-chip" data-dcat="BoxModel">Box Model & Layouts (4)</button>
+        <button class="desc-chip" data-dcat="AI">GenAI in Web (1)</button>
+      </div>
+
+      <div id="descriptiveList" class="descriptive-container"></div>
+    </section>
+
+    <!-- SECTION D: QUICK REVISION & TOOLS -->
+    <section id="revision" class="panel">
+      <div class="section-head">
+        <div>
+          <span class="kicker">EXAM PREP TOOLKIT</span>
+          <h2>Quick Revision & Interactive Tools</h2>
+          <p>Key syllabus summaries, CSS selector specificity calculator, and interactive CSS Box Model explorer.</p>
+        </div>
+      </div>
+
+      <!-- Revision Search Bar -->
+      <div class="search-bar-wrap">
+        <input type="text" id="revisionSearch" placeholder="🔍 Search revision topics (e.g. specificity, border-box, inheritance, void elements)..." />
+      </div>
+
+      <!-- Interactive Tools Split -->
+      <div class="tools-grid">
+        <!-- Interactive Box Model Explorer -->
+        <div class="tool-card">
+          <div class="tool-card-head">
+            <h3>📦 Interactive CSS Box Model Playground</h3>
+            <span class="pill pill-purple">Interactive</span>
+          </div>
+          <p>Adjust the sliders to visualize how margins, borders, padding, and box-sizing affect the final calculated element dimensions.</p>
+
+          <div class="box-model-controls">
+            <div class="control-row">
+              <label>Box Sizing:</label>
+              <div class="box-sizing-toggle">
+                <button class="btn-toggle active" id="btnContentBox" data-sizing="content-box">content-box (default)</button>
+                <button class="btn-toggle" id="btnBorderBox" data-sizing="border-box">border-box</button>
+              </div>
+            </div>
+            <div class="sliders-grid">
+              <label>Width: <span id="valWidth">240</span>px <input type="range" id="inputWidth" min="100" max="360" value="240"></label>
+              <label>Height: <span id="valHeight">100</span>px <input type="range" id="inputHeight" min="50" max="200" value="100"></label>
+              <label>Padding: <span id="valPadding">20</span>px <input type="range" id="inputPadding" min="0" max="60" value="20"></label>
+              <label>Border: <span id="valBorder">10</span>px <input type="range" id="inputBorder" min="0" max="30" value="10"></label>
+              <label>Margin: <span id="valMargin">25</span>px <input type="range" id="inputMargin" min="0" max="50" value="25"></label>
+            </div>
+          </div>
+
+          <div class="box-model-visualizer">
+            <div class="bm-margin" id="bmMargin">
+              <span class="bm-label">Margin (<span id="dispMargin">25</span>px)</span>
+              <div class="bm-border" id="bmBorder">
+                <span class="bm-label">Border (<span id="dispBorder">10</span>px)</span>
+                <div class="bm-padding" id="bmPadding">
+                  <span class="bm-label">Padding (<span id="dispPadding">20</span>px)</span>
+                  <div class="bm-content" id="bmContent">
+                    <span class="bm-label">Content</span>
+                    <strong id="dispContentDim">240 × 100</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-model-calculation" id="bmCalculation">
+            <!-- Computed math output -->
+          </div>
+        </div>
+
+        <!-- CSS Specificity Calculator -->
+        <div class="tool-card">
+          <div class="tool-card-head">
+            <h3>🎯 CSS Specificity Calculator</h3>
+            <span class="pill pill-purple">Calculator</span>
+          </div>
+          <p>Enter any CSS selector to inspect its cascade weight calculation <code>(Inline, ID, Class, Element)</code>.</p>
+          
+          <div class="specificity-input-wrap">
+            <input type="text" id="specificityInput" value="header.main-nav ul li#active a:hover" placeholder="Enter selector, e.g. #nav .item > a" />
+            <button class="btn btn-primary" id="calcSpecificityBtn">Calculate</button>
+          </div>
+
+          <div class="specificity-result-grid" id="specificityResult">
+            <div class="spec-col">
+              <span class="spec-num" id="specInline">0</span>
+              <span class="spec-type">Inline Style</span>
+              <small>1,0,0,0</small>
+            </div>
+            <div class="spec-col">
+              <span class="spec-num" id="specId">1</span>
+              <span class="spec-type">IDs (#id)</span>
+              <small>0,1,0,0</small>
+            </div>
+            <div class="spec-col">
+              <span class="spec-num" id="specClass">2</span>
+              <span class="spec-type">Classes / Pseudo</span>
+              <small>0,0,1,0</small>
+            </div>
+            <div class="spec-col">
+              <span class="spec-num" id="specElement">4</span>
+              <span class="spec-type">Elements</span>
+              <small>0,0,0,1</small>
+            </div>
+          </div>
+
+          <div class="specificity-explanation" id="specificityDesc">
+            Target selector has 1 ID, 2 Classes/Pseudo-classes, and 4 Elements.
+          </div>
+        </div>
+      </div>
+
+      <!-- Revision Cards Grid -->
+      <h3 class="revision-heading">Core Syllabus Key Concept Cards</h3>
+      <div class="revision-grid" id="revisionGrid"></div>
+    </section>
+
+    <!-- SECTION E: EXAM SIMULATOR -->
+    <section id="simulator" class="panel">
+      <div class="section-head">
+        <div>
+          <span class="kicker">INTERNAL EXAM SIMULATION (30 MARKS)</span>
+          <h2>Mock Exam Simulator</h2>
+          <p>Experience an exact 45-minute timed test formatted to your internal syllabus blueprint.</p>
+        </div>
+        <div class="timer-box hidden" id="examTimerBox">
+          <span class="timer-clock" id="timerClock">45:00</span>
+          <small>Time Remaining</small>
+        </div>
+      </div>
+
+      <!-- Simulator Intro Screen -->
+      <div id="simulatorIntro" class="sim-card">
+        <div class="sim-intro-content">
+          <h3>Ready to test your knowledge under exam conditions?</h3>
+          <p>The simulator generates a fresh, randomized question paper adhering strictly to the internal exam pattern:</p>
+          <ul class="sim-blueprint-list">
+            <li><b>Part A:</b> 10 Random MCQs (10 Marks, 1 mark each)</li>
+            <li><b>Part B:</b> 2 Coding Challenges presented, choose & solve 1 (10 Marks)</li>
+            <li><b>Part C:</b> 3 Descriptive Questions presented, choose & answer 2 (10 Marks)</li>
+            <li><b>Time Limit:</b> 45 Minutes (Countdown with auto-submit or manual submit)</li>
+          </ul>
+          <button class="btn btn-primary btn-large" id="startExamBtn">🚀 Start Exam Simulator</button>
+        </div>
+      </div>
+
+      <!-- Simulator Active Paper Screen -->
+      <div id="simulatorPaper" class="sim-paper hidden">
+        <div class="paper-header">
+          <div>
+            <h3>INTERNAL ASSESSMENT EXAMINATION — PRACTICE</h3>
+            <p>Subject: Web Application Development • Time: 45 Mins • Max Marks: 30</p>
+          </div>
+          <button class="btn btn-accent" id="submitExamBtn">🏁 Submit Examination</button>
+        </div>
+
+        <!-- Part A Paper -->
+        <div class="paper-section">
+          <h4>PART A: MULTIPLE CHOICE QUESTIONS (10 × 1 = 10 Marks)</h4>
+          <p class="section-note">Answer all 10 questions.</p>
+          <div id="simMcqContainer"></div>
+        </div>
+
+        <!-- Part B Paper -->
+        <div class="paper-section">
+          <h4>PART B: CODING QUESTION (Answer ANY ONE — 1 × 10 = 10 Marks)</h4>
+          <p class="section-note">Select one of the two challenge options and implement it in HTML/CSS.</p>
+          <div class="coding-choice-tabs" id="simCodingTabs"></div>
+          <div id="simCodingContainer"></div>
+        </div>
+
+        <!-- Part C Paper -->
+        <div class="paper-section">
+          <h4>PART C: DESCRIPTIVE QUESTIONS (Answer ANY TWO — 2 × 5 = 10 Marks)</h4>
+          <p class="section-note">Write well-structured answers for two chosen questions.</p>
+          <div id="simDescContainer"></div>
+        </div>
+
+        <div class="paper-footer">
+          <button class="btn btn-primary btn-large" id="submitExamBtn2">🏁 Submit Examination</button>
+        </div>
+      </div>
+
+      <!-- Simulator Report Card Screen -->
+      <div id="simulatorReport" class="sim-card hidden">
+        <div class="report-header">
+          <h3>Exam Performance Report</h3>
+          <span class="report-badge" id="reportGrade">GRADE: A</span>
+        </div>
+        <div class="report-metrics-grid">
+          <div class="report-metric">
+            <span class="metric-title">Part A (MCQs)</span>
+            <strong id="repMcqScore">0 / 10</strong>
+          </div>
+          <div class="report-metric">
+            <span class="metric-title">Part B (Coding)</span>
+            <strong id="repCodeScore">0 / 10</strong>
+          </div>
+          <div class="report-metric">
+            <span class="metric-title">Part C (Theory)</span>
+            <strong id="repDescScore">Self-eval</strong>
+          </div>
+          <div class="report-metric highlight">
+            <span class="metric-title">Total Estimated</span>
+            <strong id="repTotalScore">0 / 30</strong>
+          </div>
+        </div>
+        <div id="reportFeedback" class="report-feedback-text"></div>
+        <div class="report-actions">
+          <button class="btn btn-primary" id="retakeExamBtn">🔄 Take Another Mock Test</button>
+          <button class="btn btn-secondary" id="reviewExamBtn">📖 Review Solutions</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <p><b>Web Application Development</b> • Comprehensive Internal Exam Practice Portal</p>
+      <p>Prepared for university students. Master semantic HTML5, modern CSS layouts (flexbox/grid), responsive styling, and GenAI workflows.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
